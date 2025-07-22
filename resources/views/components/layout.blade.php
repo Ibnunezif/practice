@@ -15,9 +15,23 @@
     <header>
 
         <nav>
-            <h1>Ninja Network</h1>
-            <a href =" {{ route('ninja.index') }}" >all ninjas </a>
-            <a href = "{{ route('ninja.create') }}">create new ninjas </a>
+            @guest
+                <a href =" {{ route('show.login') }}" class="btn">Login</a>
+                <a href = "{{ route('show.register') }}" class="btn">Register </a>
+            @endguest
+
+            @auth
+                <a class="hed" href=" {{ route('ninja.index') }}">Ninjas Network</a>
+                <span class="border-r-2 pr-2">
+                    Hi there, {{ Auth::user()->name }}
+                </span>
+                <a href="{{ route('ninja.create') }}">create new ninjas </a>
+                <form action="{{ route('logout') }}" method="post" class="m-0">
+                    @csrf
+                    <button class="btn" type="submit">logout</button>
+                </form>
+            @endauth
+
         </nav>
     </header>
     <main class = "container">
