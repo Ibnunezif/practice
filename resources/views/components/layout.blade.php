@@ -15,13 +15,13 @@
     <header>
 
         <nav>
+            <a class="hed" href=" {{ route('ninja.index') }}">Ninjas Network</a>
             @guest
                 <a href =" {{ route('show.login') }}" class="btn">Login</a>
                 <a href = "{{ route('show.register') }}" class="btn">Register </a>
             @endguest
 
             @auth
-                <a class="hed" href=" {{ route('ninja.index') }}">Ninjas Network</a>
                 <span class="border-r-2 pr-2">
                     Hi there, {{ Auth::user()->name }}
                 </span>

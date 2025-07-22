@@ -8,14 +8,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('register',[AuthController::class,"showRegister"])->name("show.register");
-Route::get('login',[AuthController::class,"showLogin"])->name("show.login");
-Route::post('register',[AuthController::class,"register"])->name("register");
-Route::post('login',[AuthController::class,"login"])->name("login");
+Route::controller(AuthController::class)->middleware('guest')->group(function (){
+    Route::get('register',"showRegister")->name("show.register");
+    Route::get('login',"showLogin")->name("show.login");
+    Route::post('register',"register")->name("register");
+    Route::post('login',"login")->name("login");
+});
 Route::post('logout',[AuthController::class,"logout"])->name("logout");
 
 
-Route::controller(NinjaController::class)->prefix("/ninjas")->name("ninja.")->group(function () {
+Route::controller(NinjaController::class)->prefix("/ninjas")->middleware('auth')->name("ninja.")->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/create', 'create')->name('create');
     Route::get('/{ninja}', 'show')->name('show');
