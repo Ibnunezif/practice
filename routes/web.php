@@ -7,8 +7,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/ninjas',[NinjaController::class,'index'])->name('ninja.index');
-Route::get('/ninjas/create', [NinjaController::class,'create'])->name('ninja.create');
-Route::get('/ninjas/{ninja}',[NinjaController::class,'show'])->name('ninja.show');
-Route::post("/ninjas",[NinjaController::class,'store'])->name("ninja.store");
-Route::delete("ninjas/{ninja}",[NinjaController::class,'destroy'])->name('ninja.destroy');
+Route::controller(NinjaController::class)->prefix("/ninjas")->name("ninja.")->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::get('/{ninja}', 'show')->name('show');
+    Route::post("/", 'store')->name("store");
+    Route::delete("/{ninja}", 'destroy')->name('destroy');
+});
